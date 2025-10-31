@@ -10,30 +10,15 @@ st.set_page_config(page_title="e-Commerce Sales Forecaster", layout="wide")
 st.title("e-Commerce Sales Forecaster (XGBoost)")
 st.markdown("**پیش‌بینی فروش ۳۰ روز آینده | بدون خطا**")
 
-#@st.cache_data
-#def load_data():
-#    df = pd.read_csv('data.csv', encoding='ISO-8859-1', parse_dates=['InvoiceDate'])
-#    df = df[df['Quantity'] > 0]
-#    df['Revenue'] = df['Quantity'] * df['Price']
-#    daily = df.groupby(df['InvoiceDate'].dt.date)['Revenue'].sum().reset_index()
-#    daily.columns = ['ds', 'y']
-#    # تبدیل به datetime
-#    daily['ds'] = pd.to_datetime(daily['ds'])
-#    return df, daily
-
 @st.cache_data
 def load_data():
-    # لینک مستقیم Google Drive (ID فایل رو جایگزین کن)
-    url = "https://drive.google.com/file/d/1mSs_R7DpUPSiggJEGOmCWCv0aizMWBLE/view?usp=drive_link"  # ID فایل شما
+    url = "https://drive.google.com/file/d/1mSs_R7DpUPSiggJEGOmCWCv0aizMWBLE/view?usp=drive_link" 
     df = pd.read_csv(url, encoding='ISO-8859-1', parse_dates=['InvoiceDate'])
-    
-    # فیلتر و پردازش
     df = df[df['Quantity'] > 0]
     df['Revenue'] = df['Quantity'] * df['UnitPrice']
     daily = df.groupby(df['InvoiceDate'].dt.date)['Revenue'].sum().reset_index()
     daily.columns = ['ds', 'y']
     daily['ds'] = pd.to_datetime(daily['ds'])
-    
     return df, daily
 
 
